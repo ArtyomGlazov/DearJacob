@@ -6,10 +6,12 @@ namespace DearJacob
     {
         private float[,] arrUNext;
         private byte kolIter;
+        float accuracy;
         private Matrix myMatrix;
 
-        public WorkWithMatrix(Matrix matrix)
+        public WorkWithMatrix(Matrix matrix, float accuracy)
         {
+            this.accuracy = accuracy;
             myMatrix = matrix;
             arrUNext = new float[matrix.ArrE.GetLength(0), matrix.ArrE.GetLength(1)];
         }
@@ -43,7 +45,7 @@ namespace DearJacob
 
                 kolIter++;
             }
-            while (arrA.SumNeDiagElem() > 0.001);
+            while (arrA.SumNeDiagElem() > accuracy);
 
             myMatrix.ArrEPlus = arrA;
             myMatrix.ArrF = arrUNext;

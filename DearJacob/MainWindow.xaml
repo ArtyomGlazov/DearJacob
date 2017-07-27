@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DearJacob"
         mc:Ignorable="d"
-        Title="Dear Jacob" Height="275" Width="600" ResizeMode="CanMinimize" FontFamily="Times New Roman"
-        WindowStartupLocation="CenterScreen" Background="{DynamicResource LinearBackGroundBefore}">
+        Title="Dear Jacob" Height="275" Width="600" MinWidth="600" MinHeight="275" ResizeMode="CanMinimize" FontFamily="Times New Roman"
+        WindowStartupLocation="CenterScreen" Background="{DynamicResource LinearBackGroundBefore}" Icon="Jacobi.png">
 
     <Window.CommandBindings>
         <CommandBinding Command="Open" Executed="OpenMenuClick"/>
@@ -19,163 +19,6 @@
         <KeyBinding Command="Save" Key="S" Modifiers="Ctrl"/>
         <KeyBinding Command="SaveAs" Key="S" Modifiers="Shift"/>
     </Window.InputBindings>
-
-    <Window.Resources>
-
-        <LinearGradientBrush x:Key="LinearBackGroundBefore" StartPoint="0, 0" EndPoint="1, 0">
-            <GradientStop Color="WhiteSmoke" Offset="1"/>
-            <GradientStop Color="Black" Offset="0.99"/>
-            <GradientStop Color="Black" Offset="0.8"/>
-            <GradientStop Color="DarkViolet" Offset="0.65"/>
-            <GradientStop Color="DarkViolet" Offset="0.01"/>
-            <GradientStop Color="WhiteSmoke" Offset="0"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="LinearBackGroundAfter" StartPoint="0, 0" EndPoint="1, 0">
-            <GradientStop Color="WhiteSmoke" Offset="1"/>
-            <GradientStop Color="DarkOrange" Offset="0.99"/>
-            <GradientStop Color="DarkOrange" Offset="0.65"/>
-            <GradientStop Color="Black" Offset="0.55"/>
-            <GradientStop Color="Black" Offset="0.45"/>
-            <GradientStop Color="DarkViolet" Offset="0.35"/>
-            <GradientStop Color="DarkViolet" Offset="0.01"/>
-            <GradientStop Color="WhiteSmoke" Offset="0"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="GrayBlueGradientBrush" StartPoint="0, 1" EndPoint="1, 1" Opacity="0.9">
-            <GradientStop Color="BlueViolet" Offset="0"/>
-            <GradientStop Color="White" Offset="0.12"/>
-            <GradientStop Color="FloralWhite" Offset="0.5"/>
-            <GradientStop Color="White" Offset="0.88"/>
-            <GradientStop Color="BlueViolet" Offset="1"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="AfterTargetButton" StartPoint="0, 1" EndPoint="1, 1" Opacity="0.9">
-            <GradientStop Color="DarkOrange" Offset="0"/>
-            <GradientStop Color="White" Offset="0.12"/>
-            <GradientStop Color="GhostWhite" Offset="0.5"/>
-            <GradientStop Color="White" Offset="0.88"/>
-            <GradientStop Color="DarkOrange" Offset="1"/>
-        </LinearGradientBrush>
-
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Margin" Value="2, 5, 8, 5"/>
-            <Setter Property="Background" Value="{StaticResource GrayBlueGradientBrush}"/>
-            <Setter Property="FontFamily" Value="Impact"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-
-                        <Grid Width="{TemplateBinding Width}">
-
-                            <Rectangle Name="Rect"
-                                       Fill="{TemplateBinding Background}"
-                                       RadiusX="5"
-                                       RadiusY="5"
-                                       Stroke="LightBlue"
-                                       StrokeThickness="1">
-
-                                <Rectangle.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform CenterX="62" CenterY="12"/>
-                                        <RotateTransform CenterX="62" CenterY="12"/>
-                                    </TransformGroup>
-                                </Rectangle.RenderTransform>
-                            </Rectangle>
-
-                            <ContentPresenter Margin="5"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Grid>
-
-                        <ControlTemplate.Triggers>
-
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Rect" Property="RadiusX" Value="6"/>
-                                <Setter TargetName="Rect" Property="RadiusY" Value="6"/>
-                                <Setter TargetName="Rect" Property="Stroke" Value="LightYellow"/>
-                                <Setter Property="Background" Value="{StaticResource AfterTargetButton}"/>
-                            </Trigger>
-
-                            <EventTrigger RoutedEvent="MouseEnter">
-                                <EventTrigger.Actions>
-                                    <BeginStoryboard Name="mouseEnterBeginStoryboard">
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="Rect"
-                                                             Storyboard.TargetProperty="(Rectangle.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
-                                                             By="-0.05" Duration="0:0:0.01"/>
-                                            <DoubleAnimation Storyboard.TargetName="Rect"
-                                                             Storyboard.TargetProperty="(Rectangle.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
-                                                             By="-0.05" Duration="0:0:0.01"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger.Actions>
-                            </EventTrigger>
-
-                            <EventTrigger RoutedEvent="MouseLeave">
-                                <EventTrigger.Actions>
-                                    <StopStoryboard BeginStoryboardName="mouseEnterBeginStoryboard"/>
-                                </EventTrigger.Actions>
-                            </EventTrigger>
-
-                            <EventTrigger RoutedEvent="Click">
-                                <EventTrigger.Actions>
-                                    <BeginStoryboard Name="mouseClickOnButton">
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="Rect"
-                                                             Storyboard.TargetProperty="(Rectangle.StrokeThickness)"
-                                                             By="10" Duration="0:0:0.05" AutoReverse="True"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger.Actions>
-                            </EventTrigger>
-
-                        </ControlTemplate.Triggers>
-
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="RichTextBox" x:Key="RichTextBoxStyle">
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Width" Value="450"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontFamily" Value="Times New Romans"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="Grid.Column" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Grid>
-                            <Border x:Name="Border" Background="WhiteSmoke"                        
-                                    BorderBrush="Black" BorderThickness="2"                        
-                                    CornerRadius="10" Opacity="1">
-                                <ScrollViewer x:Name="PART_ContentHost" Foreground="{TemplateBinding Foreground}"
-                                                  BorderThickness="0" IsTabStop="False" Margin="1" Padding="{TemplateBinding Padding}"/>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="Menu">
-            <Setter Property="FontFamily" Value="Times New Roman"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Background" Value="WhiteSmoke"/>
-        </Style>
-
-        <Style TargetType="MenuItem">
-            <Setter Property="Background" Value="WhiteSmoke"/>
-        </Style>
-
-    </Window.Resources>
-
 
     <Grid Name="MyGrid">
 
@@ -197,13 +40,13 @@
 
         <RichTextBox Name="richTextBoxK" Height="22" FontSize="14" Grid.Row="2" Style="{StaticResource RichTextBoxStyle}"/>
 
-
         <StatusBar Name="statusBar" Grid.Row="5" FontSize="12" FontFamily="Times New Roman" Grid.ColumnSpan="3">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="385"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                     </Grid>
@@ -214,6 +57,9 @@
             </StatusBarItem>
             <StatusBarItem Grid.Column="1">
                 <Label Name="labelPathToFile" Content="Path to file"/>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="2">
+                <Label Name="labelAccuracy" Content="Точность" FontWeight="Bold"/>
             </StatusBarItem>
         </StatusBar>
 

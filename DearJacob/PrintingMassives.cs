@@ -9,7 +9,7 @@ namespace DearJacob
 {
     public static class PrintingMassives
     {
-        private static void ColorizeMaxElement(RichTextBox richBox, float[,] arr)
+        private static void ColorizeMaxElement(this RichTextBox richBox, float[,] arr)
         {
             FindMaxIndexs(arr, out int iMax, out int jMax);
             string maxElement = arr[iMax, jMax].ToString();
@@ -70,6 +70,11 @@ namespace DearJacob
             for (int i = 0; i < height; i++)
             {
                 width += matr[i].Split(new char[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries).Count();
+            }
+
+            if (width == 0)
+            {
+                throw new Exception("\nЛибо в файле нет матрицы, либо матрица в полях заполнена неверно.");
             }
 
             width /= matr[0].Split(new char[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries).Count();
@@ -143,7 +148,7 @@ namespace DearJacob
             richTextBox.Document.Blocks.Add(paragraph);
 
             if (paintingMaxEl)
-                ColorizeMaxElement(richTextBox, arr);
+                richTextBox.ColorizeMaxElement(arr);
         }
 
         public static void PrintMassiveK(this RichTextBox richTexBox, float[] arr)

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.IO;
 using System.Windows;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace DearJacob
 {
@@ -17,10 +18,11 @@ namespace DearJacob
 
                 string buffer;
                 string[] lastString = null;
+                int maxWidt = 0;
 
                 int width = 0, height = 0;
 
-                using (sr = new StreamReader(pathToFile))
+                using (sr = new StreamReader(pathToFile, System.Text.Encoding.Default))
                 {
                     while ((buffer = sr.ReadLine()) != null)
                     {
@@ -29,28 +31,32 @@ namespace DearJacob
                             width = buffer.Split(new char[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries).Count();
                         }
 
-                        lastString = buffer.Split(new char[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        maxWidt += buffer.Split(new char[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries).Count();
 
                         height++;
-                    } 
+                    }
+
+                    height--;
+
                 }
 
-                height--;
+                bool checkMatrixForQuadro = ((maxWidt / width) * height) == (width * height);
 
-                if (height < 0)
+                if (height < 0 || checkMatrixForQuadro)
                 {
-                    throw new Exception("Из данного файла нельзя считать матрицу.");
+                    throw new Exception("Из данного файла нельзя считать матрицу." +
+                        "\nЛибо в файле нет матрицы, либо матрица в файле заполнена неверно.");
                 }
 
                 float[,] arrE = new float[height, width];
-                float[] arrK = new float[lastString.Count()];
+                float[] arrK = new float[width];
 
                 if (arrE.GetLength(0) != arrK.GetLength(0))
                 {
-                    throw new Exception("Количество столбцов в матрицах не равно.");
+                    MessageBox.Show("Количество столбцов в матрицах не равно.");
                 }
 
-                using (sr = new StreamReader(pathToFile))
+                using (sr = new StreamReader(pathToFile, System.Text.Encoding.Default))
                 {
                     string[] oneLineMassive = new string[width];
 
@@ -62,8 +68,12 @@ namespace DearJacob
                         {
                             arrE[i, j] = float.Parse(oneLineMassive[j]);
                         }
-                    } 
+
+                    }
+
+                    lastString = sr.ReadLine().Split(new char[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 }
+
 
                 matrix.ArrE = arrE;
                 
@@ -118,7 +128,7 @@ namespace DearJacob
                     int i = 0;
                     do
                     {
-                        pathToFileSum = string.Concat(pathToFile.Substring(0, pathToFile.Length - 4), string.Format(" (Sum) {0}.txt", i));
+                        pathToFileSum = string.Concat(pathToFile.Substring(0, pathToFile.Length - 4), string.Format($" (Sum) {i}.txt"));
                         SaveMatrixAs(pathToFileSum, matrix.ArrSum);
                     }
                     while (i --> 0);
