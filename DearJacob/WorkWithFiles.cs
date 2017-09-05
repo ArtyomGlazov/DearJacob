@@ -125,13 +125,13 @@ namespace DearJacob
                 {
                     string pathToFileSum;
 
-                    int i = 0;
+                    int i = 1;
                     do
                     {
                         pathToFileSum = string.Concat(pathToFile.Substring(0, pathToFile.Length - 4), string.Format($" (Sum) {i}.txt"));
                         SaveMatrixAs(pathToFileSum, matrix.ArrSum);
                     }
-                    while (i --> 0);
+                    while (i --> 1);
                 }
             }
         }
